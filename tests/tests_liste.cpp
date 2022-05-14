@@ -139,7 +139,26 @@ TEST_F(ListeTest, ajouter_dans_liste_non_vide_au_milieu) {
     EXPECT_EQ("[11.5, 1, 12.5]", listeDeux.format()) ;
     listeCinq.ajouter(1, 2) ;
     EXPECT_EQ("[13.5, 1, 14.5, 15.5, 16.5, 17.5]", listeCinq.format()) ;
+}
 
+TEST_F(ListeTest, ajouter_deux_elements_consecutifs_au_debut) {
+    listeVide.ajouter(1, 1) ;
+    listeVide.ajouter(2, 2) ;
+    EXPECT_EQ("[1, 2]", listeVide.format()) ;
+    EXPECT_EQ(2, listeVide.taille()) ;
+}
+
+TEST_F(ListeTest, ajouter_deux_elements_consecutifs_au_milieu) {
+    listeDeux.ajouter(1, 2) ;
+    listeDeux.ajouter(2, 2) ;
+    EXPECT_EQ("[11.5, 2, 1, 12.5]", listeDeux.format()) ;
+    EXPECT_EQ(4, listeDeux.taille()) ;
+}
+
+TEST_F(ListeTest, ajouter_deux_elements_consecutifs_a_la_fin) {
+    listeDeux.ajouter(1, 2) ;
+    listeDeux.ajouter(2, 3) ;
+    EXPECT_EQ("[11.5, 12.5, 1, 2]", listeDeux.format()) ;
 }
 
 
