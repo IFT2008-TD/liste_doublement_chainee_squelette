@@ -29,8 +29,8 @@ namespace td3 {
             int  position(const T &) const;
 
 
-
-            template<class U> friend std::ostream& operator <<(std::ostream &, const Liste<U> &);
+        std::string format() const ;
+        template<class U> friend std::ostream& operator <<(std::ostream &, const Liste<U> &);
 
         private:
 
@@ -59,6 +59,8 @@ namespace td3 {
             void        desinsererDeAdresse(Noeud* adresse) ;
             void        copier() ;
             void        effacer() ;
+
+
 
 
         };

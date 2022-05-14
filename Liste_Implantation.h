@@ -107,6 +107,11 @@ namespace td3 {
 
     }
 
+    template<typename T>
+    std::string Liste<T>::format() const {
+        return std::__cxx11::string();
+    }
+
 
 }
 
