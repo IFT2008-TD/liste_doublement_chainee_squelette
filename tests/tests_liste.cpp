@@ -185,6 +185,18 @@ TEST_F(ListeTest, enlever_dernier_element_liste_vide) {
     EXPECT_TRUE(listeUn.estVide()) ;
 }
 
+TEST_F(ListeTest, enlever_element_absent_liste_inchangee) {
+    listeCinq.enleverEl(666) ;
+    EXPECT_EQ(5, listeCinq.taille()) ;
+    EXPECT_EQ("[13.5, 14.5, 15.5, 16.5, 17.5]", listeCinq.format()) ;
+}
+
+TEST_F(ListeTest, enelver_sur_liste_vide_inchangee) {
+    listeVide.enleverEl(1) ;
+    EXPECT_TRUE(listeVide.estVide()) ;
+    EXPECT_EQ("[]", listeVide.format()) ;
+}
+
 
 
 
