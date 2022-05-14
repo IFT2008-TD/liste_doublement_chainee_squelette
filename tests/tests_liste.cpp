@@ -197,6 +197,40 @@ TEST_F(ListeTest, enelver_sur_liste_vide_inchangee) {
     EXPECT_EQ("[]", listeVide.format()) ;
 }
 
+TEST_F(ListeTest, enlever_a_position_valide_au_debut) {
+    listeCinq.enleverPos(1) ;
+    EXPECT_EQ("[14.5, 15.5, 16.6, 17.5]", listeCinq.format()) ;
+    listeCinq.enleverPos(1) ;
+    EXPECT_EQ("[15.5, 16.5, 17.5]", listeCinq.format()) ;
+    listeCinq.enleverPos(1) ;
+    EXPECT_EQ("[16.5, 17.5]", listeCinq.format()) ;
+    listeCinq.enleverPos(1) ;
+    EXPECT_EQ("[17.5]", listeCinq.format()) ;
+    listeCinq.enleverPos(1) ;
+    EXPECT_EQ("[]", listeCinq.format()) ;
+    EXPECT_TRUE(listeCinq.estVide()) ;
+}
+
+TEST_F(ListeTest, enlever_a_position_valide_au_milieu) {
+    listeCinq.enleverPos(4) ;
+    EXPECT_EQ("[13.5, 14.5, 15.5, 17.5]", listeCinq.format()) ;
+    EXPECT_EQ(4, listeCinq.taille()) ;
+}
+
+TEST_F(ListeTest, enlever_a_position_invalide_inchangee) {
+    listeCinq.enleverPos(10) ;
+    EXPECT_EQ("[13.5, 14.5, 15.5, 16.5, 17.5]", listeCinq.format()) ;
+    EXPECT_EQ(5, listeCinq.taille()) ;
+
+    listeDeux.enleverPos(-4) ;
+    EXPECT_EQ("[11.5, 12.5]", listeDeux.format()) ;
+    EXPECT_EQ(2, listeDeux.taille()) ;
+
+    listeVide.enleverPos(0) ;
+    EXPECT_EQ("[]", listeVide.format()) ;
+    EXPECT_TRUE(listeVide.estVide()) ;
+}
+
 
 
 
