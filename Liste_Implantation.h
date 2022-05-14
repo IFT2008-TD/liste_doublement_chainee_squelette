@@ -23,7 +23,7 @@ namespace td3 {
     }
 
     template<typename T>
-    const Liste<T> &Liste<T>::operator=(const Liste<T> &rhs) {
+    Liste<T> &Liste<T>::operator=(const Liste<T> &rhs) {
         return *this;
     }
 
