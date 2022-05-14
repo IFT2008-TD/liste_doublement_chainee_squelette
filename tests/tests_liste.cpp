@@ -70,6 +70,23 @@ TEST_F(ListeTest, element_retourne_valeur_sur_position_valide) {
     EXPECT_EQ(10.5, listeUn.element(1)) ;
     EXPECT_EQ(11.5, listeDeux.element(1)) ;
     EXPECT_EQ(12.5, listeDeux.element(2)) ;
+    EXPECT_EQ(13.5, listeCinq.element(1)) ;
+    EXPECT_EQ(14.5, listeCinq.element(2)) ;
+    EXPECT_EQ(17.5, listeCinq.element(5)) ;
 }
+
+TEST_F(ListeTest, element_exception_sur_position_invalide) {
+    EXPECT_THROW(listeVide.element(1), std::invalid_argument) ;
+    EXPECT_THROW(listeUn.element(0), std::invalid_argument) ;
+    EXPECT_THROW(listeUn.element(-1), std::invalid_argument) ;
+    EXPECT_THROW(listeDeux.element(-4), std::invalid_argument) ;
+    EXPECT_THROW(listeDeux.element(0), std::invalid_argument) ;
+    EXPECT_THROW(listeDeux.element(3), std::invalid_argument) ;
+    EXPECT_THROW(listeCinq.element(-1), std::invalid_argument) ;
+    EXPECT_THROW(listeCinq.element(0), std::invalid_argument) ;
+    EXPECT_THROW(listeCinq.element(6), std::invalid_argument) ;
+}
+
+
 
 

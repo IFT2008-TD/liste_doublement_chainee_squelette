@@ -7,6 +7,7 @@
 
 #include <cstddef>
 #include <iostream>
+#include <stdexcept>
 
 namespace td3 {
     template <typename T>
