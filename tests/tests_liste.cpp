@@ -237,6 +237,20 @@ TEST_F(ListeTest, enlever_a_position_invalide_inchangee) {
     EXPECT_TRUE(listeVide.estVide()) ;
 }
 
+TEST_F(ListeTest, constructeur_copie_copie_fidele) {
+    td3::Liste<double> copie(listeDeux) ;
+    EXPECT_EQ("[11.5, 12.5]", copie.format()) ;
+}
+
+TEST_F(ListeTest, operateur_assignation_membre_gauche_est_ecrase) {
+    listeCinq = listeDeux ;
+    EXPECT_EQ("[11.5, 12.5]", listeCinq.format()) ;
+}
+
+TEST_F(ListeTest, operateur_assignation_retourne_membre_droite) {
+    EXPECT_EQ("[11.5, 12.5]", (listeCinq = listeDeux).format()) ;
+}
+
 
 
 
