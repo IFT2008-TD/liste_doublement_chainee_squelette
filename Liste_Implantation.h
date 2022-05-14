@@ -59,7 +59,8 @@ namespace td3 {
 
     template<typename T>
     T Liste<T>::element(const int &position) const {
-        return nullptr;
+        T t ;
+        return t ;
     }
 
     template<typename T>
