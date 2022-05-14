@@ -161,6 +161,30 @@ TEST_F(ListeTest, ajouter_deux_elements_consecutifs_a_la_fin) {
     EXPECT_EQ("[11.5, 12.5, 1, 2]", listeDeux.format()) ;
 }
 
+TEST_F(ListeTest, enlever_element_present_au_debut) {
+    listeCinq.enleverEl(17.5) ;
+    EXPECT_EQ(4, listeCinq.taille()) ;
+    EXPECT_EQ("[13.5, 14.5, 15.5, 16.5]", listeCinq.format()) ;
+}
+
+TEST_F(ListeTest, enlever_element_present_a_la_fin) {
+    listeCinq.enleverEl(13.5) ;
+    EXPECT_EQ(4, listeCinq.taille()) ;
+    EXPECT_EQ("[14.5, 15,5, 16.5, 17.5]", listeCinq.format()) ;
+}
+
+TEST_F(ListeTest, enlever_element_present_au_milieu) {
+    listeCinq.enleverEl(15.5) ;
+    EXPECT_EQ(4, listeCinq.taille()) ;
+    EXPECT_EQ("[13.5, 14.5, 16.5, 17.5]", listeCinq.format()) ;
+}
+
+TEST_F(ListeTest, enlever_dernier_element_liste_vide) {
+    listeUn.enleverEl(10.5) ;
+    EXPECT_EQ("[]", listeUn.format()) ;
+    EXPECT_TRUE(listeUn.estVide()) ;
+}
+
 
 
 
