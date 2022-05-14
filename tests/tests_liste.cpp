@@ -87,6 +87,20 @@ TEST_F(ListeTest, element_exception_sur_position_invalide) {
     EXPECT_THROW(listeCinq.element(6), std::invalid_argument) ;
 }
 
+TEST_F(ListeTest, position_retourne_position_valide_si_element_present) {
+    EXPECT_EQ(1, listeUn.position(10.5)) ;
+    EXPECT_EQ(1, listeDeux.position(11.5)) ;
+    EXPECT_EQ(2, listeDeux.position(12.5)) ;
+    EXPECT_EQ(1, listeCinq.position(13.5)) ;
+    EXPECT_EQ(3, listeCinq.position(15.5)) ;
+    EXPECT_EQ(5, listeCinq.position(17.5)) ;
+}
 
+TEST_F(ListeTest, position_retourne_cardinal_plus_un_si_element_absent) {
+    EXPECT_EQ(1, listeVide.position(1.0)) ;
+    EXPECT_EQ(2, listeUn.position(10000)) ;
+    EXPECT_EQ(3, listeDeux.position(-70)) ;
+    EXPECT_EQ(6, listeCinq.position(13.0)) ;
+}
 
 
