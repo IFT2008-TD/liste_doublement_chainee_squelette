@@ -16,8 +16,7 @@ namespace td3 {
             explicit Liste();
                      Liste(const Liste &);
                      ~Liste();
-
-            const Liste<T> & operator =(const Liste<T> &);
+                     Liste<T> & operator =(const Liste<T> &);
 
             void ajouter(const T &, const int &);
             void enleverEl(const T &);
@@ -42,7 +41,7 @@ namespace td3 {
                 Noeud*  suivant;
                 Noeud*  precedent;
 
-                explicit Noeud(const T& data_item, Noeud * next_ptr = 0, Noeud* prev_ptr = 0) :
+                explicit Noeud(const T& data_item, Noeud * next_ptr = nullptr, Noeud* prev_ptr = nullptr) :
                         donnee(data_item), suivant(next_ptr), precedent(prev_ptr) {}
             };
 
@@ -52,7 +51,15 @@ namespace td3 {
             Noeud*      dernier ;
             int         cardinal ;
 
-            void        verifieInvariant() const;
+            bool        verifieInvariant() const;
+            Noeud*      adresseAPosition(int position) const ;
+            Noeud*      adresseDeLaValeur(const T& valeur) const ;
+
+            void        insererDansAdresse(Noeud* adresse) ;
+            void        desinsererDeAdresse(Noeud* adresse) ;
+            void        copier() ;
+            void        effacer() ;
+
 
         };
 

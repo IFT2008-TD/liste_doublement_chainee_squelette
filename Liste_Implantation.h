@@ -68,13 +68,43 @@ namespace td3 {
     }
 
     template<typename T>
-    void Liste<T>::verifieInvariant() const {
+    bool Liste<T>::verifieInvariant() const {
 
     }
 
     template<class U>
     std::ostream &operator<<(std::ostream & os, const Liste<U> &) {
         return os;
+    }
+
+    template<typename T>
+    typename Liste<T>::Noeud *Liste<T>::adresseAPosition(int position) const {
+        return nullptr;
+    }
+
+    template<typename T>
+    typename Liste<T>::Noeud *Liste<T>::adresseDeLaValeur(const T &valeur) const {
+        return nullptr;
+    }
+
+    template<typename T>
+    void Liste<T>::insererDansAdresse(Liste::Noeud *adresse) {
+
+    }
+
+    template<typename T>
+    void Liste<T>::desinsererDeAdresse(Liste::Noeud *adresse) {
+
+    }
+
+    template<typename T>
+    void Liste<T>::copier() {
+
+    }
+
+    template<typename T>
+    void Liste<T>::effacer() {
+
     }
 
 
