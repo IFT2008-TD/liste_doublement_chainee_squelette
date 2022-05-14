@@ -211,6 +211,12 @@ TEST_F(ListeTest, enlever_a_position_valide_au_debut) {
     EXPECT_TRUE(listeCinq.estVide()) ;
 }
 
+TEST_F(ListeTest, enlever_a_la_position_valide_a_la_fin) {
+    listeCinq.enleverPos(5) ;
+    EXPECT_EQ("[13.5, 14.5, 15.5, 16.5]", listeCinq.format()) ;
+    EXPECT_EQ(4, listeCinq.taille()) ;
+}
+
 TEST_F(ListeTest, enlever_a_position_valide_au_milieu) {
     listeCinq.enleverPos(4) ;
     EXPECT_EQ("[13.5, 14.5, 15.5, 17.5]", listeCinq.format()) ;
@@ -218,7 +224,7 @@ TEST_F(ListeTest, enlever_a_position_valide_au_milieu) {
 }
 
 TEST_F(ListeTest, enlever_a_position_invalide_inchangee) {
-    listeCinq.enleverPos(10) ;
+    listeCinq.enleverPos(6) ;
     EXPECT_EQ("[13.5, 14.5, 15.5, 16.5, 17.5]", listeCinq.format()) ;
     EXPECT_EQ(5, listeCinq.taille()) ;
 
