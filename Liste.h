@@ -7,7 +7,9 @@
 
 #include <cstddef>
 #include <iostream>
+#include <sstream>
 #include <stdexcept>
+#include <cassert>
 
 namespace td3 {
     template <typename T>
@@ -52,13 +54,17 @@ namespace td3 {
             Noeud*      dernier ;
             int         cardinal ;
 
+            bool        positionEstValideEnLecture(int pos) const ;
+            bool        positionEstValideEnEcriture(int pos) const ;
             bool        verifieInvariant() const;
             Noeud*      adresseAPosition(int position) const ;
+            Noeud*      revAdresseAPosition(int position) const ;
             Noeud*      adresseDeLaValeur(const T& valeur) const ;
 
-            void        insererDansAdresse(Noeud* adresse) ;
+            void        enleverAAdresse(Noeud* adresse) ;
+            void        insererDansAdresse(Noeud* noeud, Noeud* adresse) ;
             void        desinsererDeAdresse(Noeud* adresse) ;
-            void        copier() ;
+            void        copier(const Liste<T>& rhs) ;
             void        effacer() ;
 
 

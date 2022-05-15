@@ -18,7 +18,7 @@ protected:
         listeCinq.ajouter(13.5, 1) ;
         listeCinq.ajouter(14.5, 2) ;
         listeCinq.ajouter(15.5, 3) ;
-        listeCinq.ajouter(16.6, 4) ;
+        listeCinq.ajouter(16.5, 4) ;
         listeCinq.ajouter(17.5, 5) ;
     }
 
@@ -45,9 +45,9 @@ TEST_F(ListeTest, taille_correcte_apres_creation) {
 
 TEST_F(ListeTest, estVide_correcte_apres_creation) {
     EXPECT_TRUE(listeVide.estVide()) ;
-    EXPECT_FALSE(listeVide.estVide()) ;
-    EXPECT_FALSE(listeVide.estVide()) ;
-    EXPECT_FALSE(listeVide.estVide()) ;
+    EXPECT_FALSE(listeUn.estVide()) ;
+    EXPECT_FALSE(listeDeux.estVide()) ;
+    EXPECT_FALSE(listeCinq.estVide()) ;
 }
 
 TEST_F(ListeTest, appartient_true_lorsque_present) {
@@ -118,19 +118,19 @@ TEST_F(ListeTest, ajouter_dans_liste_non_vide_en_premier) {
     EXPECT_EQ("[1, 11.5, 12.5]", listeDeux.format()) ;
     EXPECT_EQ(3, listeDeux.taille()) ;
     listeCinq.ajouter(1, 1) ;
-    EXPECT_EQ("[1, 13.5, 14,5, 15.5, 16.5, 17.5]", listeCinq.format()) ;
+    EXPECT_EQ("[1, 13.5, 14.5, 15.5, 16.5, 17.5]", listeCinq.format()) ;
     EXPECT_EQ(6, listeCinq.taille()) ;
 }
 
 TEST_F(ListeTest, ajouter_dans_liste_non_vide_en_dernier) {
     listeUn.ajouter(1, 2) ;
-    EXPECT_EQ("[1, 10.5]", listeUn.format()) ;
+    EXPECT_EQ("[10.5, 1]", listeUn.format()) ;
     EXPECT_EQ(2, listeUn.taille()) ;
     listeDeux.ajouter(1, 3) ;
-    EXPECT_EQ("[1, 11.5, 12.5]", listeDeux.format()) ;
+    EXPECT_EQ("[11.5, 12.5, 1]", listeDeux.format()) ;
     EXPECT_EQ(3, listeDeux.taille()) ;
     listeCinq.ajouter(1, 6) ;
-    EXPECT_EQ("[1, 13.5, 14,5, 15.5, 16.5, 17.5]", listeCinq.format()) ;
+    EXPECT_EQ("[13.5, 14.5, 15.5, 16.5, 17.5, 1]", listeCinq.format()) ;
     EXPECT_EQ(6, listeCinq.taille()) ;
 }
 
@@ -156,8 +156,8 @@ TEST_F(ListeTest, ajouter_deux_elements_consecutifs_au_milieu) {
 }
 
 TEST_F(ListeTest, ajouter_deux_elements_consecutifs_a_la_fin) {
-    listeDeux.ajouter(1, 2) ;
-    listeDeux.ajouter(2, 3) ;
+    listeDeux.ajouter(1, 3) ;
+    listeDeux.ajouter(2, 4) ;
     EXPECT_EQ("[11.5, 12.5, 1, 2]", listeDeux.format()) ;
 }
 
@@ -170,7 +170,7 @@ TEST_F(ListeTest, enlever_element_present_au_debut) {
 TEST_F(ListeTest, enlever_element_present_a_la_fin) {
     listeCinq.enleverEl(13.5) ;
     EXPECT_EQ(4, listeCinq.taille()) ;
-    EXPECT_EQ("[14.5, 15,5, 16.5, 17.5]", listeCinq.format()) ;
+    EXPECT_EQ("[14.5, 15.5, 16.5, 17.5]", listeCinq.format()) ;
 }
 
 TEST_F(ListeTest, enlever_element_present_au_milieu) {
@@ -199,7 +199,7 @@ TEST_F(ListeTest, enelver_sur_liste_vide_inchangee) {
 
 TEST_F(ListeTest, enlever_a_position_valide_au_debut) {
     listeCinq.enleverPos(1) ;
-    EXPECT_EQ("[14.5, 15.5, 16.6, 17.5]", listeCinq.format()) ;
+    EXPECT_EQ("[14.5, 15.5, 16.5, 17.5]", listeCinq.format()) ;
     listeCinq.enleverPos(1) ;
     EXPECT_EQ("[15.5, 16.5, 17.5]", listeCinq.format()) ;
     listeCinq.enleverPos(1) ;
