@@ -7,111 +7,124 @@
 
 #include "Liste.h"
 
-namespace td3 {
+namespace td3
+{
 
-    template<typename T>
-    Liste<T>::Liste() {}
+  template<typename T>
+  Liste<T>
+  ::Liste () { }
 
-    template<typename T>
-    Liste<T>::Liste(const Liste &source) {
+  template<typename T>
+  Liste<T>
+  ::Liste (const Liste &source) { }
 
-    }
+  template<typename T>
+  Liste<T>
+  ::~Liste () { }
 
-    template<typename T>
-    Liste<T>::~Liste() {
+  template<typename T>
+  Liste<T> &Liste<T>::operator= (const Liste<T> &rhs)
+  {
+    return *this;
+  }
 
-    }
+  template<typename T>
+  void Liste<T>
+  ::ajouter (const T &valeur, const int &position) { }
 
-    template<typename T>
-    Liste<T> &Liste<T>::operator=(const Liste<T> &rhs) {
-        return *this;
-    }
+  template<typename T>
+  void Liste<T>
+  ::enleverEl (const T &valeur) { }
 
-    template<typename T>
-    void Liste<T>::ajouter(const T &valeur, const int &position) {
+  template<typename T>
+  void Liste<T>
+  ::enleverPos (const int &position) { }
 
-    }
+  template<typename T>
+  int Liste<T>
+  ::taille () const
+  {
+    return 0;
+  }
 
-    template<typename T>
-    void Liste<T>::enleverEl(const T &valeur) {
+  template<typename T>
+  bool Liste<T>
+  ::estVide () const
+  {
+    return false;
+  }
 
-    }
+  template<typename T>
+  bool Liste<T>
+  ::appartient (const T &valeur) const
+  {
+    return false;
+  }
 
-    template<typename T>
-    void Liste<T>::enleverPos(const int &position) {
+  template<typename T>
+  T Liste<T>
+  ::element (const int &position) const
+  {
+    T t;
+    return t;
+  }
 
-    }
+  template<typename T>
+  int Liste<T>
+  ::position (const T &valeur) const
+  {
+    return 0;
+  }
 
-    template<typename T>
-    int Liste<T>::taille() const {
-        return 0;
-    }
+  template<typename T>
+  bool Liste<T>
+  ::verifieInvariant () const
+  {
+    return false;
+  }
 
-    template<typename T>
-    bool Liste<T>::estVide() const {
-        return false;
-    }
+  template<class U>
+  std::ostream &operator<< (std::ostream & os, const Liste<U> &)
+  {
+    return os;
+  }
 
-    template<typename T>
-    bool Liste<T>::appartient(const T &valeur) const {
-        return false;
-    }
+  template<typename T>
+  typename Liste<T>::Noeud *Liste<T>
+  ::adresseAPosition (int position) const
+  {
+    return nullptr;
+  }
 
-    template<typename T>
-    T Liste<T>::element(const int &position) const {
-        T t ;
-        return t ;
-    }
+  template<typename T>
+  typename Liste<T>::Noeud *Liste<T>
+  ::adresseDeLaValeur (const T &valeur) const
+  {
+    return nullptr;
+  }
 
-    template<typename T>
-    int Liste<T>::position(const T &valeur) const {
-        return 0;
-    }
+  template<typename T>
+  void Liste<T>
+  ::insererDansAdresse (Liste::Noeud *adresse) { }
 
-    template<typename T>
-    bool Liste<T>::verifieInvariant() const {
+  template<typename T>
+  void Liste<T>
+  ::desinsererDeAdresse (Liste::Noeud *adresse) { }
 
-    }
+  template<typename T>
+  void Liste<T>
+  ::copier () { }
 
-    template<class U>
-    std::ostream &operator<<(std::ostream & os, const Liste<U> &) {
-        return os;
-    }
+  template<typename T>
+  void Liste<T>
+  ::effacer () { }
 
-    template<typename T>
-    typename Liste<T>::Noeud *Liste<T>::adresseAPosition(int position) const {
-        return nullptr;
-    }
-
-    template<typename T>
-    typename Liste<T>::Noeud *Liste<T>::adresseDeLaValeur(const T &valeur) const {
-        return nullptr;
-    }
-
-    template<typename T>
-    void Liste<T>::insererDansAdresse(Liste::Noeud *adresse) {
-
-    }
-
-    template<typename T>
-    void Liste<T>::desinsererDeAdresse(Liste::Noeud *adresse) {
-
-    }
-
-    template<typename T>
-    void Liste<T>::copier() {
-
-    }
-
-    template<typename T>
-    void Liste<T>::effacer() {
-
-    }
-
-    template<typename T>
-    std::string Liste<T>::format() const {
-        return std::__cxx11::string();
-    }
+  template<typename T>
+  std::string Liste<T>
+  ::format () const
+  {
+    return "";
+  }
 
 
 }
