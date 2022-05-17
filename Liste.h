@@ -44,6 +44,8 @@ namespace td3 {
                 Noeud*  suivant;
                 Noeud*  precedent;
 
+                explicit Noeud() : donnee(), suivant(nullptr), precedent(nullptr) {}
+
                 explicit Noeud(const T& data_item, Noeud * next_ptr = nullptr, Noeud* prev_ptr = nullptr) :
                         donnee(data_item), suivant(next_ptr), precedent(prev_ptr) {}
             };

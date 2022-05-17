@@ -10,26 +10,32 @@
 namespace td3 {
 
     template<typename T>
-    Liste<T>::Liste() : premier(nullptr), dernier(nullptr), cardinal(0) {
+    Liste<T>::Liste() : premier(new Noeud), dernier(new Noeud), cardinal(0) {
+        premier->suivant = dernier;
+        dernier->precedent = premier;
         assert(verifieInvariant()) ;
     }
 
     template<typename T>
-    Liste<T>::Liste(const Liste &source) : premier(nullptr), dernier(nullptr), cardinal(0) {
-        copier(source) ;
+    Liste<T>::Liste(const Liste &source) : premier(new Noeud), dernier(new Noeud), cardinal(0) {
+        premier->suivant = dernier ;
+        dernier->precedent = premier ;
+        copier(source);
         assert(verifieInvariant()) ;
     }
 
     template<typename T>
     Liste<T>::~Liste() {
-        effacer() ;
+        effacer();
+        delete premier ;
+        delete dernier ;
     }
 
     template<typename T>
     Liste<T> &Liste<T>::operator=(const Liste<T> &rhs) {
         if (&rhs != this) {
-            effacer() ;
-            copier(rhs) ;
+            effacer();
+            copier(rhs);
         }
         assert(verifieInvariant()) ;
         return *this;
@@ -37,49 +43,29 @@ namespace td3 {
 
     template<typename T>
     void Liste<T>::ajouter(const T &valeur, const int &position) {
-        if (!positionEstValideEnEcriture(position)) return ;
-        auto n = new Noeud(valeur) ;
-
-        if (estVide()) {
-            premier = n ;
-            dernier = n ;
-        }
-
-        else if (position == 1) {
-            n->suivant = premier ;
-            premier = n ;
-            (n->suivant)->precedent = n ;
-        }
-
-        else if (position == cardinal + 1) {
-            n->precedent = dernier ;
-            dernier = n ;
-            (n->precedent)->suivant = n ;
-        }
-
-        else {
-            Noeud* p = adresseAPosition(position) ;
-            insererDansAdresse(n, p) ;
-        }
-        cardinal ++ ;
+        if (!positionEstValideEnEcriture(position)) return;
+        auto n = new Noeud(valeur);
+        Noeud *p = adresseAPosition(position);
+        insererDansAdresse(n, p);
+        cardinal++;
         assert(verifieInvariant()) ;
     }
 
     template<typename T>
     void Liste<T>::enleverEl(const T &valeur) {
-        if (estVide()) return ;
+        if (estVide()) return;
 
-        auto n = adresseDeLaValeur(valeur) ;
-        enleverAAdresse(n) ;
+        auto n = adresseDeLaValeur(valeur);
+        enleverAAdresse(n);
         assert(verifieInvariant()) ;
     }
 
     template<typename T>
     void Liste<T>::enleverPos(const int &position) {
-        if (!positionEstValideEnLecture(position)) return ;
+        if (!positionEstValideEnLecture(position)) return;
 
-        auto n = adresseAPosition(position) ;
-        enleverAAdresse(n) ;
+        auto n = adresseAPosition(position);
+        enleverAAdresse(n);
 
         assert(verifieInvariant()) ;
 
@@ -102,88 +88,89 @@ namespace td3 {
 
     template<typename T>
     T Liste<T>::element(const int &position) const {
-        if (!positionEstValideEnLecture(position)) throw std::invalid_argument("element: position invalide") ;
-        auto p = adresseAPosition(position) ;
-        return p->donnee ;
+        if (!positionEstValideEnLecture(position)) throw std::invalid_argument("element: position invalide");
+        auto p = adresseAPosition(position);
+        return p->donnee;
     }
 
     template<typename T>
     int Liste<T>::position(const T &valeur) const {
-        if (estVide()) return 1 ;
+        if (estVide()) return 1;
 
-        int position = 1 ;
-        for (auto p = premier; p != nullptr; p = p->suivant) {
-            if (p->donnee == valeur) return position ;
-            ++position ;
+        int position = 1;
+        for (auto p = premier->suivant; p != dernier; p = p->suivant) {
+            if (p->donnee == valeur) return position;
+            ++position;
         }
         return position;
     }
 
     template<typename T>
     bool Liste<T>::verifieInvariant() const {
-        if (cardinal == 0) return (premier == nullptr) && (dernier == nullptr) ;
+        if ((premier->precedent != nullptr) || (dernier->suivant != nullptr)) return false ;
 
-        Noeud* p = adresseAPosition(cardinal) ;
-        if ( (p->suivant != nullptr) || (p != dernier) ) return false ;
+        if (cardinal == 0) return (premier->suivant == dernier) && (dernier->precedent == premier) ;
 
-        Noeud* d = revAdresseAPosition(1) ;
-        if ((d->precedent != nullptr) || (d != premier)) return false ;
+        Noeud *p = adresseAPosition(cardinal);
+        if (p->suivant != dernier) return false;
 
-        return true ;
+        Noeud *d = revAdresseAPosition(1);
+        if (d->precedent != premier)  return false;
+
+        return true;
     }
 
     template<class U>
-    std::ostream &operator<<(std::ostream & os, const Liste<U> &liste) {
-        os << liste.format() ;
+    std::ostream &operator<<(std::ostream &os, const Liste<U> &liste) {
+        os << liste.format();
         return os;
     }
 
     template<typename T>
     typename Liste<T>::Noeud *Liste<T>::adresseAPosition(int position) const {
-        assert(positionEstValideEnLecture(position)) ;
-        Noeud* p = premier ;
-        for (int i = 1; i < position; ++i) p = p->suivant ;
-        return p ;
+        Noeud *p = premier;
+        for (int i = 0; i < position; ++i) p = p->suivant;
+        return p;
     }
 
     template<typename T>
     typename Liste<T>::Noeud *Liste<T>::adresseDeLaValeur(const T &valeur) const {
-        for (auto p = premier; p != nullptr; p = p->suivant) {
-            if (p->donnee == valeur) return p ;
+        for (auto p = premier->suivant; p != dernier; p = p->suivant) {
+            if (p->donnee == valeur) return p;
         }
         return nullptr;
     }
 
     template<typename T>
-    void Liste<T>::insererDansAdresse(Liste::Noeud* noeud, Liste::Noeud *adresse) {
-        noeud->precedent = adresse->precedent ;
-        noeud->suivant = adresse ;
-        (noeud->precedent)->suivant = noeud ;
-        (noeud->suivant)->precedent = noeud ;
+    void Liste<T>::insererDansAdresse(Liste::Noeud *noeud, Liste::Noeud *adresse) {
+        noeud->precedent = adresse->precedent;
+        noeud->suivant = adresse;
+        (noeud->precedent)->suivant = noeud;
+        (noeud->suivant)->precedent = noeud;
     }
 
     template<typename T>
     void Liste<T>::desinsererDeAdresse(Liste::Noeud *adresse) {
-        (adresse->precedent)->suivant = adresse->suivant ;
-        (adresse->suivant)->precedent = adresse->precedent ;
+        (adresse->precedent)->suivant = adresse->suivant;
+        (adresse->suivant)->precedent = adresse->precedent;
     }
 
     template<typename T>
     void Liste<T>::effacer() {
-        while (!estVide()) enleverPos(1) ;
+        while (!estVide()) enleverPos(1);
     }
 
     template<typename T>
     std::string Liste<T>::format() const {
-        if (estVide()) return "[]" ;
+        if (estVide()) return "[]";
 
-        std::ostringstream os ;
-        os << "[" ;
-        for (Noeud* p = premier; p != nullptr; p = p->suivant) {
-            os << p->donnee ;
-            if (p->suivant != nullptr) os << ", " ;
+        std::ostringstream os;
+        os << "[";
+        for (Noeud *p = premier->suivant; p != dernier; p = p->suivant) {
+            os << p->donnee;
+            if (p->suivant != dernier) os << ", ";
         }
-        os << "]" ;
+        os << "]";
         return os.str();
     }
 
@@ -194,49 +181,31 @@ namespace td3 {
 
     template<typename T>
     typename Liste<T>::Noeud *Liste<T>::revAdresseAPosition(int position) const {
-        assert(positionEstValideEnLecture(position)) ;
 
-        Noeud* d = dernier ;
-        for (int i = cardinal; i > position; --i) d = d->precedent ;
+        Noeud *d = dernier;
+        for (int i = cardinal+1; i > position; --i) d = d->precedent;
         return d;
     }
 
     template<typename T>
     bool Liste<T>::positionEstValideEnEcriture(int pos) const {
-        return (pos >0) && (pos <= (cardinal + 1)) ;
+        return (pos > 0) && (pos <= (cardinal + 1));
     }
 
     template<typename T>
     void Liste<T>::enleverAAdresse(Liste::Noeud *adresse) {
-        if (adresse == nullptr) return ;
-
-        if (cardinal == 1) {
-            premier = nullptr ;
-            dernier = nullptr ;
-        }
-
-        else if (adresse == premier) {
-            premier = adresse->suivant ;
-            (adresse->suivant)->precedent = nullptr ;
-        }
-
-        else if (adresse == dernier) {
-            dernier = adresse->precedent ;
-            (adresse->precedent)->suivant = nullptr ;
-        }
-
-        else desinsererDeAdresse(adresse) ;
-
-        --cardinal ;
+        if (adresse == nullptr) return;
+        desinsererDeAdresse(adresse);
+        --cardinal;
     }
 
     template<typename T>
     void Liste<T>::copier(const Liste<T> &rhs) {
-        assert(estVide()) ;
+        assert(estVide());
 
-        if (rhs.estVide()) return ;
-        for (auto p = rhs.premier; p != nullptr; p = p->suivant){
-            ajouter(p->donnee, taille() + 1) ;
+        if (rhs.estVide()) return;
+        for (auto p = rhs.premier->suivant; p != rhs.dernier; p = p->suivant) {
+            ajouter(p->donnee, taille() + 1);
         }
     }
 
