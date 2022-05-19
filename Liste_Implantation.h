@@ -165,9 +165,9 @@ namespace td3 {
     int Liste<T>::position(const T &valeur) const {
         if (estVide()) return 1;
 
-        int position = 1;
-        for (auto p = premier->suivant; p != dernier; p = p->suivant) {
-            if (p->donnee == valeur) return position;
+        int position = 0 ;
+        for (auto p = begin(); p != end(); p++) {
+            if (*p == valeur) return position;
             ++position;
         }
         return position;
@@ -351,6 +351,26 @@ namespace td3 {
         for (auto p = rhs.premier->suivant; p != rhs.dernier; p = p->suivant) {
             ajouter(p->donnee, taille() + 1);
         }
+    }
+
+    template<typename T>
+    typename Liste<T>::const_iterateur Liste<T>::cbegin() const {
+        return Liste<T>::const_iterateur(premier);
+    }
+
+    template<typename T>
+    typename Liste<T>::iterateur Liste<T>::begin() const {
+        return Liste<T>::iterateur(premier);
+    }
+
+    template<typename T>
+    typename Liste<T>::const_iterateur Liste<T>::cend() const {
+        return Liste<T>::const_iterateur(dernier);
+    }
+
+    template<typename T>
+    typename Liste<T>::iterateur Liste<T>::end() const {
+        return Liste<T>::iterateur(dernier);
     }
 
 
