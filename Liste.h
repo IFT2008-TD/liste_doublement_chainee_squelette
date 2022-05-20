@@ -21,6 +21,9 @@ namespace td3 {
         class iterateur;
 
     public:
+
+        // Constructeurs et méthodes de Coplien
+
         explicit Liste();
 
         Liste(const Liste &);
@@ -28,6 +31,8 @@ namespace td3 {
         ~Liste();
 
         Liste<T> &operator=(const Liste<T> &);
+
+        // Itérateurs
 
         const_iterateur cbegin() const ;
 
@@ -37,11 +42,15 @@ namespace td3 {
 
         iterateur end() const ;
 
+        // Modifications de la liste: ajout et retrait
+
         void ajouter(const T &, const int &);
 
         void enleverEl(const T &);
 
         void enleverPos(const int &);
+
+        // Méthodes en lecture seule: interrogation de la liste
 
         int taille() const;
 
@@ -53,6 +62,7 @@ namespace td3 {
 
         int position(const T &) const;
 
+        // Affichage et IO
 
         std::string format() const;
 
@@ -61,6 +71,7 @@ namespace td3 {
 
     private:
 
+        // Classe privée contenant les noeuds de la liste
 
         class Noeud {
         public:
@@ -74,10 +85,13 @@ namespace td3 {
                     donnee(data_item), suivant(next_ptr), precedent(prev_ptr) {}
         };
 
+        // Attributs
 
-        Noeud *premier;
-        Noeud *dernier;
-        int cardinal;
+        Noeud *premier; // Adresse de la sentinelle de gauche
+        Noeud *dernier; // Adresse de la sentinelle de droite
+        int cardinal;   // Nombre d'éléments
+
+        // Méthodes privées en lecture seule
 
         bool positionEstValideEnLecture(int pos) const;
 
@@ -91,6 +105,8 @@ namespace td3 {
 
         iterateur adresseDeLaValeur(const T &valeur) const;
 
+        // Méthodes privées qui modifient la liste
+
         void enleverAAdresse(iterateur adresse);
 
         void insererDansAdresse(Noeud *noeud, iterateur itAdresse);
@@ -101,16 +117,13 @@ namespace td3 {
 
         void effacer();
 
+        // Itérateurs:  ce sont deux classes publiques déclarées dans la classe Liste
+
     public:
         class const_iterateur {
 
         public:
             explicit const_iterateur(Noeud* p = nullptr) : courant(p) {}
-
-            const_iterateur get_suivant () const {return courant->suivant ; }
-            const_iterateur set_suivant (Noeud* v) {courant->suivant = v ; }
-            const_iterateur get_precedent () const {return courant->precedent ; }
-            const_iterateur set_precedent (Noeud* v) {courant->precedent = v ; }
 
             const const_iterateur& operator++() {
                 courant = courant->suivant ;
