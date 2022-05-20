@@ -71,10 +71,13 @@ namespace td3 {
     template<typename T>
     void Liste<T>::ajouter(const T &valeur, const int &position) {
         if (!positionEstValideEnEcriture(position)) return;
+
         auto n = new Noeud(valeur);
-        Noeud *p = adresseAPosition(position);
+        auto p = adresseAPosition(position);
+
         insererDansAdresse(n, p);
         cardinal++;
+
         assert(verifieInvariant()) ;
     }
 
@@ -90,6 +93,7 @@ namespace td3 {
 
         auto n = adresseDeLaValeur(valeur);
         enleverAAdresse(n);
+
         assert(verifieInvariant()) ;
     }
 
@@ -138,7 +142,7 @@ namespace td3 {
      */
     template<typename T>
     bool Liste<T>::appartient(const T &valeur) const {
-        return (adresseDeLaValeur(valeur) != nullptr);
+        return (adresseDeLaValeur(valeur) != end());
     }
 
     /**
@@ -152,7 +156,7 @@ namespace td3 {
     T Liste<T>::element(const int &position) const {
         if (!positionEstValideEnLecture(position)) throw std::invalid_argument("element: position invalide");
         auto p = adresseAPosition(position);
-        return p->donnee;
+        return *p ;
     }
 
     /**
@@ -184,11 +188,12 @@ namespace td3 {
 
         if (cardinal == 0) return (premier->suivant == dernier) && (dernier->precedent == premier) ;
 
-        Noeud *p = adresseAPosition(cardinal);
-        if (p->suivant != dernier) return false;
+        /*
+        auto p = adresseAPosition(cardinal);
+        if (++p != end()) return false;
 
-        Noeud *d = revAdresseAPosition(1);
-        if (d->precedent != premier)  return false;
+        auto d = revAdresseAPosition(1);
+        if (--d != premier)  return false;*/
 
         return true;
     }
@@ -214,9 +219,9 @@ namespace td3 {
      * @pre position est valide
      */
     template<typename T>
-    typename Liste<T>::Noeud *Liste<T>::adresseAPosition(int position) const {
-        Noeud *p = premier;
-        for (int i = 0; i < position; ++i) p = p->suivant;
+    typename Liste<T>::iterateur Liste<T>::adresseAPosition(int position) const {
+        auto p = begin();
+        for (int i = 0; i < position; ++i) ++p ;
         return p;
     }
 
@@ -225,14 +230,15 @@ namespace td3 {
      * @tparam T
      * @param valeur Valeur recherchée
      * @return Un pointeur sur le noeud contenant la première occurrence de valeur.  Si la valeur cherchée est absente,
-     * retourne nullptr.
+     * retourne end().
      */
     template<typename T>
-    typename Liste<T>::Noeud *Liste<T>::adresseDeLaValeur(const T &valeur) const {
-        for (auto p = premier->suivant; p != dernier; p = p->suivant) {
-            if (p->donnee == valeur) return p;
+    typename Liste<T>::iterateur Liste<T>::adresseDeLaValeur(const T &valeur) const {
+        auto p = begin() ;
+        for ( ; p != end(); ++p) {
+            if (*p == valeur) return p;
         }
-        return nullptr;
+        return p;
     }
 
     /**
@@ -242,7 +248,9 @@ namespace td3 {
      * @param adresse adresse où insérer le noeud
      */
     template<typename T>
-    void Liste<T>::insererDansAdresse(Liste::Noeud *noeud, Liste::Noeud *adresse) {
+    void Liste<T>::insererDansAdresse(Liste::Noeud *noeud, Liste::iterateur itAdresse) {
+        auto adresse = itAdresse.courant ;
+
         noeud->precedent = adresse->precedent;
         noeud->suivant = adresse;
         (noeud->precedent)->suivant = noeud;
@@ -255,7 +263,9 @@ namespace td3 {
      * @param adresse Adresse du noeud à retirer
      */
     template<typename T>
-    void Liste<T>::desinsererDeAdresse(Liste::Noeud *adresse) {
+    void Liste<T>::desinsererDeAdresse(Liste::iterateur it) {
+        auto adresse = it.courant ;
+
         (adresse->precedent)->suivant = adresse->suivant;
         (adresse->suivant)->precedent = adresse->precedent;
     }
@@ -331,8 +341,8 @@ namespace td3 {
      * @param adresse Adresse du noeud à retirer
      */
     template<typename T>
-    void Liste<T>::enleverAAdresse(Liste::Noeud *adresse) {
-        if (adresse == nullptr) return;
+    void Liste<T>::enleverAAdresse(Liste::iterateur adresse) {
+        if (adresse == end()) return;
         desinsererDeAdresse(adresse);
         --cardinal;
     }

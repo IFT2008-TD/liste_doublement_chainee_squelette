@@ -85,17 +85,17 @@ namespace td3 {
 
         bool verifieInvariant() const;
 
-        Noeud *adresseAPosition(int position) const;
+        iterateur adresseAPosition(int position) const;
 
         Noeud *revAdresseAPosition(int position) const;
 
-        Noeud *adresseDeLaValeur(const T &valeur) const;
+        iterateur adresseDeLaValeur(const T &valeur) const;
 
-        void enleverAAdresse(Noeud *adresse);
+        void enleverAAdresse(iterateur adresse);
 
-        void insererDansAdresse(Noeud *noeud, Noeud *adresse);
+        void insererDansAdresse(Noeud *noeud, iterateur itAdresse);
 
-        void desinsererDeAdresse(Noeud *adresse);
+        void desinsererDeAdresse(iterateur it);
 
         void copier(const Liste<T> &rhs);
 
@@ -103,15 +103,21 @@ namespace td3 {
 
     public:
         class const_iterateur {
+
         public:
             explicit const_iterateur(Noeud* p = nullptr) : courant(p) {}
+
+            const_iterateur get_suivant () const {return courant->suivant ; }
+            const_iterateur set_suivant (Noeud* v) {courant->suivant = v ; }
+            const_iterateur get_precedent () const {return courant->precedent ; }
+            const_iterateur set_precedent (Noeud* v) {courant->precedent = v ; }
 
             const const_iterateur& operator++() {
                 courant = courant->suivant ;
                 return *this ;
             }
 
-            const_iterateur operator++(int ){
+            const_iterateur  operator++(int){
                 courant = courant->suivant ;
                 return *this ;
             }
@@ -138,8 +144,12 @@ namespace td3 {
         };
 
         class iterateur : public const_iterateur {
+
+            friend void Liste<T>::desinsererDeAdresse(iterateur it) ;
+            friend void Liste<T>::insererDansAdresse(Noeud* noeud, iterateur itAdresse) ;
+
         public:
-            iterateur(Noeud* p) : const_iterateur(p) {}
+            explicit iterateur(Noeud* p) : const_iterateur(p) {}
 
             T &operator*() const {
                 return const_iterateur::courant->donnee;
@@ -148,7 +158,6 @@ namespace td3 {
 
 
     };
-
 
 }
 
