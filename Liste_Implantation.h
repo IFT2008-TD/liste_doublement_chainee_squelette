@@ -334,6 +334,7 @@ namespace td3 {
     void Liste<T>::enleverAAdresse(Liste::Noeud *adresse) {
         if (adresse == nullptr) return;
         desinsererDeAdresse(adresse);
+        delete adresse ;
         --cardinal;
     }
 
